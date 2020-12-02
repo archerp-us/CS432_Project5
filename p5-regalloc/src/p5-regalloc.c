@@ -1,6 +1,8 @@
 /**
  * @file p5-regalloc.c
  * @brief Compiler phase 5: register allocation
+ * @authors Philip Archer and Xinzhe He
+ * @date December 9, 2020
  */
 #include "p5-regalloc.h"
 
@@ -62,4 +64,19 @@ void insert_load(int bp_offset, int pr, ILOCInsn* prev_insn)
 
 void allocate_registers (InsnList* list, int num_physical_registers)
 {
+	if (list == NULL)
+	{
+		return;
+	}
+	
+	//allocate_registers(block)
+	FOR_EACH(ILOCInsn*, instruction, list)
+	{
+		ILOCInsn* ret = ILOCInsn_get_read_registers(instruction);
+		
+		/*FOR_EACH(Operand, op, ret)
+		{
+			
+		}*/
+	}
 }

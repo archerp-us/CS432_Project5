@@ -1,8 +1,8 @@
-==1922584== Memcheck, a memory error detector
-==1922584== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1922584== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==1922584== Command: ../decaf inputs/sanity.decaf
-==1922584== 
+==4164398== Memcheck, a memory error detector
+==4164398== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==4164398== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==4164398== Command: ../decaf inputs/sanity.decaf
+==4164398== 
 main:
   push BP
   i2i SP => BP
@@ -96,12 +96,18 @@ other memory:  65528: -9999999
 
 Executing: return
 RETURN VALUE = 4
-==1922584== 
-==1922584== HEAP SUMMARY:
-==1922584==     in use at exit: 0 bytes in 0 blocks
-==1922584==   total heap usage: 1,765 allocs, 1,765 frees, 449,692 bytes allocated
-==1922584== 
-==1922584== All heap blocks were freed -- no leaks are possible
-==1922584== 
-==1922584== For lists of detected and suppressed errors, rerun with: -s
-==1922584== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==4164398== 
+==4164398== HEAP SUMMARY:
+==4164398==     in use at exit: 11,704 bytes in 11 blocks
+==4164398==   total heap usage: 1,776 allocs, 1,765 frees, 461,396 bytes allocated
+==4164398== 
+==4164398== LEAK SUMMARY:
+==4164398==    definitely lost: 11,704 bytes in 11 blocks
+==4164398==    indirectly lost: 0 bytes in 0 blocks
+==4164398==      possibly lost: 0 bytes in 0 blocks
+==4164398==    still reachable: 0 bytes in 0 blocks
+==4164398==         suppressed: 0 bytes in 0 blocks
+==4164398== Rerun with --leak-check=full to see details of leaked memory
+==4164398== 
+==4164398== For lists of detected and suppressed errors, rerun with: -s
+==4164398== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
