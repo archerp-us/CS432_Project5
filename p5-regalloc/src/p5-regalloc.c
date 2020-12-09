@@ -62,6 +62,59 @@ void insert_load(int bp_offset, int pr, ILOCInsn* prev_insn)
     prev_insn->next = new_insn;
 }
 
+// Helper arrays
+Operand name[];
+int offset[];
+
+//spill helper function
+void spill (Operand pr)
+{
+	// emit store from pr onto stack at offset x
+	//x = offset[name[pr]];
+	//name[pr] = INVALID;
+}
+
+//dist helper function
+void dist (Operand vr)
+{
+	//return index of instruction where vr is next used
+}
+
+//allocate helper function
+void allocate (Operand vr)
+{
+	/*if (name[pr] == INVALID)
+	{
+		name[pr] = vr;
+		return pr;
+	}
+	else
+	{
+		// find pr that maximizes next[pr]
+		spill(pr);
+		name[pr] = vr;
+		return pr;
+	}*/
+}
+
+//ensure helper function
+void ensure (Operand vr)
+{
+	/*if (name[pr] == vr) //for some pr
+	{
+		return pr;
+	}
+	else
+	{
+		pr = allocate(vr);
+		if (offset[vr])
+		{
+			// emit load into pr from offset[vr]
+		}
+		return pr;
+	}*/
+}
+
 void allocate_registers (InsnList* list, int num_physical_registers)
 {
 	if (list == NULL)
@@ -70,13 +123,33 @@ void allocate_registers (InsnList* list, int num_physical_registers)
 	}
 	
 	//allocate_registers(block)
-	FOR_EACH(ILOCInsn*, instruction, list)
+	FOR_EACH(ILOCInsn*, i, list)
 	{
-		ILOCInsn* ret = ILOCInsn_get_read_registers(instruction);
-		
-		/*FOR_EACH(Operand, op, ret)
-		{
+		ILOCInsn* read = ILOCInsn_get_read_registers(i);
+		Operand write = ILOCInsn_get_write_register(i);
+
+		//FOR_EACH(virtual_register, vr, read->op)
+		//{
+			// pr = ensure(vr);
+			// replace vr with pr in i
 			
+			/*if (dist(vr) == INFINITY)
+			{
+				name[pr] = INVALID; // free pr
+			}*/
+		//}
+		
+		/*FOR_EACH(virtual_register, vr, write)
+		{
+			// pr = allocate(vr);
+			// replace vr with pr in i
+		}*/
+		
+		//spill section
+		/*if (i->form == CALL)
+		{
+			// for each pr where name[pr] != INVALID
+				// spill(pr);
 		}*/
 	}
 }
