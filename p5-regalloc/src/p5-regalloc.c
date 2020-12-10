@@ -63,7 +63,7 @@ void insert_load(int bp_offset, int pr, ILOCInsn* prev_insn)
 }
 
 // Helper arrays
-Operand name[];
+Operand name[MAX_PHYSICAL_REGS];
 int offset[];
 
 //spill helper function
@@ -81,7 +81,7 @@ void dist (Operand vr)
 }
 
 //allocate helper function
-void allocate (Operand vr)
+Operand allocate (Operand vr)
 {
 	/*if (name[pr] == INVALID)
 	{
@@ -90,29 +90,32 @@ void allocate (Operand vr)
 	}
 	else
 	{
-		// find pr that maximizes next[pr]
-		spill(pr);
-		name[pr] = vr;
+		// find pr that maximizes dist(name[pr])
+		//spill(pr);
+		//name[pr] = vr;
 		return pr;
 	}*/
 }
 
 //ensure helper function
-void ensure (Operand vr)
+Operand ensure (Operand vr)
 {
-	/*if (name[pr] == vr) //for some pr
+	for (int i = 0; i < sizeof(name); i++)
 	{
-		return pr;
-	}
-	else
-	{
-		pr = allocate(vr);
-		if (offset[vr])
+		Operand pr = name[i];
+		if (pr.type == vr.type)
 		{
-			// emit load into pr from offset[vr]
+			return pr;
 		}
-		return pr;
+	}
+	
+	//else
+	Operand pr = allocate(vr);
+	/*if (offset[vr]) //deals with spills
+	{
+		// emit load into pr from offset[vr]
 	}*/
+	return pr;
 }
 
 void allocate_registers (InsnList* list, int num_physical_registers)
@@ -123,27 +126,25 @@ void allocate_registers (InsnList* list, int num_physical_registers)
 	}
 	
 	//allocate_registers(block)
-	FOR_EACH(ILOCInsn*, i, list)
+	FOR_EACH(ILOCInsn*, instruction, list)
 	{
-		ILOCInsn* read = ILOCInsn_get_read_registers(i);
-		Operand write = ILOCInsn_get_write_register(i);
+		ILOCInsn* read = ILOCInsn_get_read_registers(instruction);
+		Operand write = ILOCInsn_get_write_register(instruction);
 
-		//FOR_EACH(virtual_register, vr, read->op)
-		//{
-			// pr = ensure(vr);
-			// replace vr with pr in i
+		for (int i = 0; i < sizeof(read->op); i++)
+		{
+			//Operand pr = ensure(read->op[i]);
+			//instruction->op[i] = pr; // replace vr with pr in instruction
 			
 			/*if (dist(vr) == INFINITY)
 			{
 				name[pr] = INVALID; // free pr
 			}*/
-		//}
+		}
 		
-		/*FOR_EACH(virtual_register, vr, write)
-		{
-			// pr = allocate(vr);
-			// replace vr with pr in i
-		}*/
+		//written register
+		// pr = allocate(vr);
+		// replace vr with pr in i
 		
 		//spill section
 		/*if (i->form == CALL)
